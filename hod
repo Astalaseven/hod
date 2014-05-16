@@ -23,7 +23,7 @@ fi
 # Lancement
 
 echo "Launching!"
-cp -r "$INSTALL_DIR/HOD*" ~
+cp -r "$INSTALL_DIR"/HOD* ~
 javaws "$FILE_NAME" &> /dev/null
 
 
@@ -31,7 +31,7 @@ javaws "$FILE_NAME" &> /dev/null
 #Nettoyage
 
 sleep 10
-running_pid=$(ps aux | grep -m1 "HOD" | awk '{print $2}')
+running_pid=$(pgrep -f "HOD")
 
 while kill -0 "$running_pid" 2> /dev/null; do
     echo "Waiting for process end..."
