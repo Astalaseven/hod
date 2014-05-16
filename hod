@@ -1,0 +1,44 @@
+#!/bin/bash
+
+INSTALL_DIR="/home/asta/.hod"
+FILE_NAME="HOD_Login1.jnlp"
+DOWNLOAD_URL="http://www.hodv11.cfwb.be/"$FILE_NAME
+
+# Installation
+
+if [[ ! -e $INSTALL_DIR ]]; then
+    mkdir -p $INSTALL_DIR && echo "Install dir created"
+elif [[ ! -d $dir ]]; then
+    echo "$INSTALL_DIR already exists but is not a directory" &> /dev/null
+fi
+
+cd $INSTALL_DIR
+if [[ ! -f $FILE_NAME ]]; then                                            
+    curl -O $DOWNLOAD_URL &> /dev/null && echo "Download OK"                 
+fi
+#wget --continue --no-clobber $DOWNLOAD_URL &> /dev/null && echo "Download OK"
+
+
+
+# Lancement
+
+echo "Launching!"
+cp -r $INSTALL_DIR/HOD* ~
+javaws $FILE_NAME &> /dev/null
+
+
+
+#Nettoyage
+
+sleep 10
+running_pid=$(ps aux| grep -m1 "HOD" | awk '{print $2}')
+
+while kill -0 $running_pid 2> /dev/null; do
+    echo "Waiting for process end..."
+    sleep 10 # attend que le programme se termine
+done
+
+echo "Cleaning"
+cd ~
+mv -f connection.test www.hodv11.* HOD* $INSTALL_DIR &> /dev/null
+rm -r connection.test www.hodv11.* HOD* &> /dev/null
