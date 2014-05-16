@@ -4,7 +4,7 @@ INSTALL_DIR="/home/$USER/.hod"
 FILE_NAME="HOD_Login1.jnlp"
 DOWNLOAD_URL="http://www.hodv11.cfwb.be/"$FILE_NAME
 
-# Installation
+# Install if necessary
 
 if [[ ! -e "$INSTALL_DIR" ]]; then
     mkdir -p "$INSTALL_DIR" && echo "Install dir created"
@@ -20,7 +20,7 @@ fi
 
 
 
-# Lancement
+# Launch
 
 echo "Launching!"
 cp -r "$INSTALL_DIR"/HOD* ~
@@ -28,14 +28,14 @@ javaws "$FILE_NAME" &> /dev/null
 
 
 
-#Nettoyage
+# Clean
 
 sleep 10
 running_pid=$(pgrep -f "HOD")
 
 while kill -0 "$running_pid" 2> /dev/null; do
     echo "Waiting for process end..."
-    sleep 10 # attend que le programme se termine
+    sleep 60
 done
 
 echo "Cleaning"
