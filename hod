@@ -40,5 +40,5 @@ done
 
 echo "Cleaning"
 cd ~
-mv -f connection.test www.hodv11.* HOD* $INSTALL_DIR &> /dev/null
+mv -f connection.test www.hodv11.* HOD* "$INSTALL_DIR" &> /dev/null
 rm -r connection.test www.hodv11.* HOD* &> /dev/null
