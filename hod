@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INSTALL_DIR="/home/asta/.hod"
+INSTALL_DIR="/home/$USER/.hod"
 FILE_NAME="HOD_Login1.jnlp"
 DOWNLOAD_URL="http://www.hodv11.cfwb.be/"$FILE_NAME
 
