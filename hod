@@ -13,10 +13,13 @@ elif [[ ! -d $dir ]]; then
 fi
 
 cd "$INSTALL_DIR"
-if [[ ! -f "$FILE_NAME" ]]; then                                            
-    curl -O "$DOWNLOAD_URL" &> /dev/null && echo "Download OK"                 
+if [[ ! -f "$FILE_NAME" ]]; then
+    if [ "$(expr substr "$(uname)")" == "Darwin" ]; then
+        curl -O "$DOWNLOAD_URL" &> /dev/null && echo "Download OK"      
+    elif [ "$(expr substr "$(r "$(uname -s)" 1 5))")" ]; then
+        wget --continue --no-clobber "$DOWNLOAD_URL" &> /dev/null && echo "Download OK"
+    fi
 fi
-#wget --continue --no-clobber $DOWNLOAD_URL &> /dev/null && echo "Download OK"
 
 
 
@@ -35,7 +38,7 @@ running_pid=$(pgrep -f "HOD")
 
 while kill -0 "$running_pid" 2> /dev/null; do
     echo "Waiting for process end..."
-    sleep 60
+    sleep 30
 done
 
 echo "Cleaning"
