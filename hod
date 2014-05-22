@@ -3,6 +3,7 @@
 INSTALL_DIR="/home/$USER/.hod"
 FILE_NAME="HOD_Login1.jnlp"
 DOWNLOAD_URL="http://www.hodv11.cfwb.be/"$FILE_NAME
+OS="'uname'"
 
 # Install if necessary
 
@@ -13,12 +14,20 @@ elif [[ ! -d $dir ]]; then
 fi
 
 cd "$INSTALL_DIR"
-if [[ ! -f "$FILE_NAME" ]]; then                                            
-    curl -O "$DOWNLOAD_URL" &> /dev/null && echo "Download OK"                 
+
+if [[ ! -f "$FILE_NAME" ]]; then
+    case $OS in
+    'Linux')
+    wget --continue --no-clobber "$DOWNLOAD_URL" &> /dev/null && echo "Download OK"
+    ;;
+    'Darwin')
+    curl -O "$DOWNLOAD_URL" &> /dev/null && echo "Download OK"
+    ;;
+    *)
+    echo "$OS not supported yet"
+    ;;
+    esac
 fi
-#wget --continue --no-clobber $DOWNLOAD_URL &> /dev/null && echo "Download OK"
-
-
 
 # Launch
 
@@ -35,7 +44,7 @@ running_pid=$(pgrep -f "HOD")
 
 while kill -0 "$running_pid" 2> /dev/null; do
     echo "Waiting for process end..."
-    sleep 60
+    sleep 30
 done
 
 echo "Cleaning"
